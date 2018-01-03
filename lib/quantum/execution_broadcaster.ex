@@ -44,6 +44,9 @@ defmodule Quantum.ExecutionBroadcaster do
       |> Enum.filter(&add_reboot_event?/1)
       |> Enum.map(fn {:add, job} -> {:execute, job} end)
 
+    state = state
+    |> Map.put(:time, NaiveDateTime.utc_now())
+
     state =
       events
       |> Enum.reject(&add_reboot_event?/1)
